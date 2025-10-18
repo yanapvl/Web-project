@@ -32,11 +32,18 @@ router.register(r'contacts', views.ContactViewSet, basename='contacts')
 router.register(r'footer-links', views.FooterLinkViewSet, basename='footer-links')
 router.register(r'settings', views.SiteSettingsViewSet, basename='settings')
 
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Головна сторінка працює!")
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/landing-page/', views.landing_page_data, name='landing-page'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('', home, name='home'),  # <- додаємо головну сторінку
+]
+
 
 # Для медіа файлів в режимі розробки
 if settings.DEBUG:
