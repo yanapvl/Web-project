@@ -206,3 +206,6 @@ class SiteSettings(models.Model):
 
     def __str__(self):
         return self.site_name
+    
+    class ShowCard(models.Model):
+        image = models.ImageField(upload_to='showcards/')

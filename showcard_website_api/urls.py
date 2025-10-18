@@ -36,7 +36,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/landing-page/', views.landing_page_data, name='landing-page'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Для медіа файлів в режимі розробки
 if settings.DEBUG:

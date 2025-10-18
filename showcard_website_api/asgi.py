@@ -11,6 +11,8 @@ import os
 
 from django.core.asgi import get_asgi_application
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "showcard_website_api.settings")
 
 application = get_asgi_application()
