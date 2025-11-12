@@ -1,26 +1,68 @@
-@import "tailwindcss";
-
+/* BASE STYLES */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Головні кольори */
+  --bg-dark: #121212; /* Дуже темний фон */
+  --text-light: #ffffff; /* Світлий текст */
+  --accent-green: #38bdf8; /* Головний зелений колір (можна змінити на #4CAF50, якщо потрібно) */
+  --card-bg: #1e1e1e; /* Фон для карток/секцій */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Скидання базових стилів */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  font-family: Arial, sans-serif; /* Ви можете замінити на ваш фірмовий шрифт */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Головні заголовки */
+h1, h2, h3 {
+  color: var(--text-light);
+  line-height: 1.2;
+}
+
+/* Акцентний колір для заголовків */
+.accent-text {
+  color: var(--accent-green);
+}
+
+/* Обмеження ширини контейнера */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Кнопки */
+.btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: var(--accent-green);
+  color: var(--bg-dark);
+  border: none;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--accent-green);
+  border: 1px solid var(--accent-green);
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+/* Стилі для роздільника секцій */
+hr {
+    border: none;
+    border-top: 1px solid #333;
+    margin: 40px 0;
 }

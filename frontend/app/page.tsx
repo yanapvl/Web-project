@@ -1,103 +1,101 @@
-import Image from "next/image";
+// frontend/app/page.tsx
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import { HeroSection } from './components/Hero'; // Можливо, Hero, якщо ви перейменували
+import { FeaturesSection } from './components/Features'; // Можливо, Features
+import { ProductsSection } from './components/Products'; // Можливо, Products
+import { AboutSection } from './components/About'; // Додайте цей імпорт
+import { EventsSection } from './components/Events'; 
+import { ContactSection } from './components/Contact';
+import { Footer } from './components/Footer';
+// ІМПОРТУЄМО ТИПИ З TYPES.TS
+import { LandingPageData } from './types'; 
+// !!! ТУТ НЕ МАЄ БУТИ ЖОДНИХ ЛОКАЛЬНИХ ОГОЛОШЕНЬ INTERFACE !!!
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+// Функція для отримання даних (використовує LandingPageData з імпорту)
+async function getLandingPageData(): Promise<LandingPageData | null> {
+    const API_URL = 'http://localhost:8000/api/landing-page/';
+    
+    try {
+        const response = await fetch(API_URL, { cache: 'no-store' });
+        if (!response.ok) {
+            console.error(`HTTP error! Status: ${response.status}`);
+            return null;
+        }
+        const data: LandingPageData = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Помилка під час отримання даних з API:', error);
+        return null;
+    }
+}
+
+// Головний компонент сторінки
+export default async function Home() {
+    const data = await getLandingPageData();
+
+    if (!data) {
+        return (
+            <main className="container" style={{ padding: '100px 20px', textAlign: 'center' }}>
+                <h1 style={{ color: 'red' }}>❌ Помилка завантаження даних</h1>
+                <p>Перевірте, чи працює ваш бекенд на `http://localhost:8000`.</p>
+            </main>
+        );
+    }
+    const contactPhone = data.contact?.phone || ''; 
+    const siteSettings = data.settings;
+    return (
+        <main>
+            {/* Навігація */}
+            <nav style={{ 
+                position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+                display: 'flex', justifyContent: 'space-between', padding: '20px 40px',
+                backgroundColor: 'rgba(18, 18, 18, 0.9)', backdropFilter: 'blur(5px)'
+            }}>
+                <h3 className="accent-text" style={{ margin: 0 }}>{data.settings?.site_name || 'StarBucks'}</h3>
+                {/* ... посилання навігації ... */}
+            </nav>
+
+            {/* 1. HERO SECTION */}
+            {data.hero && <HeroSection data={data.hero} />}
+
+            {/* 2. FEATURES SECTION */}
+            {data.features && data.features.length > 0 && (
+                <FeaturesSection data={data.features} />
+            )}
+            
+            <hr className="container" />
+            
+            {/* 3. PRODUCTS SECTION */}
+            {data.products && data.products.length > 0 && (
+                <ProductsSection data={data.products} />
+            )}
+
+            <hr className="container" />
+
+            {/* 4. ABOUT SECTION (НОВЕ) */}
+            {data.about && <AboutSection data={data.about} />}
+            
+            <hr className="container" />
+            
+           {/* 5. EVENTS SECTION (НОВЕ) */}
+            {data.events && data.events.length > 0 && (
+                <EventsSection data={data.events} />
+            )}
+            
+            <hr className="container" />
+            {/* 6. CONTACTS SECTION (НОВЕ) */}
+            {data.contact && <ContactSection data={data.contact} />}
+            
+            <hr className="container" />
+            {/* 7. FOOTER SECTION (ФІНАЛЬНИЙ КОМПОНЕНТ) */}
+            {siteSettings && data.footer_links.length > 0 && (
+                <Footer 
+                    links={data.footer_links} 
+                    settings={siteSettings} 
+                    contactPhone={contactPhone} 
+                />
+            )}
+
+        </main>
+    );
 }
