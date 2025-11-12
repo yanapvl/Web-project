@@ -29,20 +29,20 @@ export const FeaturesSection: React.FC<FeaturesProps> = ({ data }) => {
                 backgroundColor: 'var(--card-bg)',
                 padding: '40px',
                 borderRadius: '15px',
-                marginTop: '-100px', // Щоб секція "заходила" на Hero блок, як у дизайні
+                marginTop: '-10px', // Щоб секція "заходила" на Hero блок, як у дизайні
                 position: 'relative',
                 zIndex: 10
             }}>
                 {data.map((feature) => (
-                    <div key={feature.id} style={{ maxWidth: '30%', textAlign: 'center' }}>
+                    <div key={feature.id} style={{ maxWidth: '40%', textAlign: 'center' }}>
                         {/*  */}
                         <img 
                             src={`${BASE_URL}${feature.icon}`} 
                             alt={feature.title} 
                             style={{ 
-                                width: '80px', 
-                                height: '80px', 
-                                margin: '0 auto 15px auto',
+                                width: '170px', 
+                                height: '150px', 
+                                margin: '0 auto 10px auto',
                                 objectFit: 'cover'
                             }}
                         />

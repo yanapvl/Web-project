@@ -1,38 +1,24 @@
 // frontend/app/components/HeroSection.tsx
 import React from 'react';
-
-// Інтерфейс відповідає HeroSectionSerializer
-interface HeroData {
-    id: number;
-    title: string;
-    subtitle: string;
-    description: string;
-    hero_image: string; // URL до зображення
-    premium_users: number;
-    customers: number;
-    winning: number;
-}
+// Використовуємо імпорт типів з types.ts для уникнення конфліктів
+import { HeroData } from '../types'; 
 
 interface HeroProps {
     data: HeroData;
 }
 
 // Функція для форматування чисел (9000 -> 9k+)
-const formatNumber = (num: number, suffix: string): string => {
+const formatNumber = (num: number): string => {
     if (num >= 1000) {
-        return `${(num / 1000).toFixed(0)}k+ ${suffix}`;
+        // Додаємо + до кінця, як у дизайні, без пробілу
+        return `${(num / 1000).toFixed(0)}k+`; 
     }
-    return `${num} ${suffix}`;
+    return `${num}+`;
 };
 
-
 export const HeroSection: React.FC<HeroProps> = ({ data }) => {
-    // Враховуючи, що у вас в дизайні є "New Cafe by StarBucks", 
-    // ми використовуємо title та subtitle
-    const brandName = "StarBucks"; 
     
-    // ВАЖЛИВО: Оскільки це компонент для відображення медіафайлів Django, 
-    // вам потрібно буде налаштувати BASE_URL для зображень (наприклад, 'http://localhost:8000')
+    // ВАЖЛИВО: Переконайтеся, що ваш бекенд працює і обслуговує медіафайли
     const BASE_URL = 'http://localhost:8000'; 
     const imageUrl = `${BASE_URL}${data.hero_image}`; 
 
@@ -41,16 +27,16 @@ export const HeroSection: React.FC<HeroProps> = ({ data }) => {
             display: 'flex', 
             justifyContent: 'space-between', 
             alignItems: 'center', 
-            paddingTop: '80px', 
+            paddingTop: '100px', 
             minHeight: '80vh'
         }}>
             {/* Ліва колонка - Текст та кнопки */}
-            <div style={{ maxWidth: '50%' }}>
+            <div style={{ maxWidth: '55%' }}>
                 <h1 style={{ fontSize: '4em', margin: '0 0 10px 0' }}>
                     {data.title}
                 </h1>
                 <h2 className="accent-text" style={{ fontSize: '4em', margin: '0 0 20px 0' }}>
-                    by {brandName}
+                    {data.subtitle}
                 </h2>
                 
                 <p style={{ color: '#aaa', lineHeight: '1.6' }}>
@@ -67,25 +53,42 @@ export const HeroSection: React.FC<HeroProps> = ({ data }) => {
                     </button>
                 </div>
 
-                {/* Статистика */}
-                <div style={{ display: 'flex', marginTop: '40px' }}>
-                    <div style={{ marginRight: '40px' }}>
-                        <h3 style={{ margin: '0 0 5px 0' }}>
-                            {formatNumber(data.premium_users, 'Premium Users')}
+                {/* Статистика: ТЕПЕР ПОВНА */}
+                <div style={{ display: 'flex', marginTop: '30px' }}>
+                    
+                    {/* 1. Premium Users */}
+                    <div style={{ marginRight: '30px' }}>
+                        <h3 className="accent-text" style={{ margin: '0 0 5px 0', fontSize: '2em' }}>
+                            {formatNumber(data.premium_users)}
                         </h3>
                         <p style={{ color: '#aaa', margin: '0' }}>Premium Users</p>
                     </div>
-                    {/* ... інші поля customers та winning ... */}
+                    
+                    {/* 2. Happy Customer (Customers) */}
+                    <div style={{ marginRight: '30px' }}>
+                        <h3 className="accent-text" style={{ margin: '0 0 5px 0', fontSize: '2em' }}>
+                            {formatNumber(data.customers)}
+                        </h3>
+                        <p style={{ color: '#aaa', margin: '0' }}>Happy Customer</p>
+                    </div>
+                    
+                    {/* 3. Awards Winning (Winning) */}
+                    <div>
+                        <h3 className="accent-text" style={{ margin: '0 0 5px 0', fontSize: '2em' }}>
+                            {formatNumber(data.winning)}
+                        </h3>
+                        <p style={{ color: '#aaa', margin: '0' }}>Awards Winning</p>
+                    </div>
+                    
                 </div>
             </div>
 
             {/* Права колонка - Зображення */}
-            <div style={{ maxWidth: '45%' }}>
-                {/*  - Цей тег імітує зображення з дизайну */}
+            <div style={{ maxWidth: '25%' }}>
                 <img 
                     src={imageUrl} 
                     alt={data.title} 
-                    style={{ width: '100%', height: 'auto', borderRadius: '15px' }}
+                    style={{ width: '100%', height: 'auto', transform: 'rotate(10deg) scale(1.1)' }}
                 />
             </div>
         </section>

@@ -28,10 +28,10 @@ export const EventsSection: React.FC<EventsProps> = ({ data }) => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
                 <div style={{ maxWidth: '600px' }}>
                     <h2 style={{ fontSize: '3em', margin: '0 0 10px 0' }}>
-                        Our New <span className="accent-text">Events</span>
+                        Наші нові <span className="accent-text">Події</span>
                     </h2>
                     <p style={{ color: '#aaa' }}>
-                        Only in 2023 we have made more than 100,000 orders for you, your loyalty unites us, and in 2024 we are ready to destroy the market!
+                        
                     </p>
                 </div>
             </div>
@@ -65,7 +65,7 @@ export const EventsSection: React.FC<EventsProps> = ({ data }) => {
                         <div style={{
                             position: 'absolute',
                             top: 0, left: 0, right: 0, bottom: 0,
-                            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
                             zIndex: 1,
                             borderRadius: '10px',
                         }}></div>
@@ -79,9 +79,7 @@ export const EventsSection: React.FC<EventsProps> = ({ data }) => {
                         </div>
 
                         {/* Кнопка "More" */}
-                        <div style={{ zIndex: 2, marginTop: '15px' }}>
-                            <button className="btn btn-primary">More</button>
-                        </div>
+
                     </div>
                 ))}
             </div>

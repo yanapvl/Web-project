@@ -71,7 +71,7 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ['phone', 'is_active']
+    list_display = ['phone', 'is_active'] # <-- ТУТ НЕМАЄ ОПИСУ ТА ЗОБРАЖЕННЯ
     list_filter = ['is_active']
     search_fields = ['phone', 'description']
     list_editable = ['is_active']

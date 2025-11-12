@@ -15,10 +15,10 @@ export const ProductsSection: React.FC<ProductsProps> = ({ data }) => {
         <section className="container" style={{ padding: '80px 0' }}>
             {/* Заголовок секції */}
             <h2 style={{ fontSize: '3em', margin: '0 0 10px 0' }}>
-                New Our <span className="accent-text">Products</span>
+                Наші фірмові <span className="accent-text">Новинки</span>
             </h2>
             <p style={{ color: '#aaa', maxWidth: '600px', marginBottom: '40px' }}>
-                Have time to buy the most harmonious drinks in the new StarBucks coffee and don't forget about the discount!
+                Встигніть придбати найгармонійніші напої в новій кав'ярні StarBucks !
             </p>
 
             {/* Контейнер для карток продуктів */}
@@ -58,7 +58,7 @@ export const ProductsSection: React.FC<ProductsProps> = ({ data }) => {
                         {/* Ціна та об'єм */}
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '15px 0' }}>
                             <p style={{ fontWeight: 'bold', fontSize: '1.2em', margin: 0 }}>
-                                {product.price}$
+                                {product.price}₴
                             </p>
                             <p style={{ color: '#888', margin: 0 }}>
                                 {product.volume} ml
